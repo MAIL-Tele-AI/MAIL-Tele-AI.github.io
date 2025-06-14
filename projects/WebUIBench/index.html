@@ -1,5 +1,613 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        This is WebUIBench
-    </body>
+<head>
+  <meta charset="utf-8">
+  <!-- <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos."> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebUIBench: Benchmark for Evaluating Multimodal
+Large Language Models in WebUI-to-Code</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/data.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://github.com/MAIL-Tele-AI/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://github.com/MAIL-Tele-AI/MalwareBench">
+            MalwareBench
+          </a>
+          <!-- <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            <span style="vertical-align: middle;font-family:cursive">WebUIBench</span>
+          </h1>
+          <h2 class="subtitle is-3 publication-subtitle">Benchmark for Evaluating Multimodal
+Large Language Models in <span style="vertical-align: middle;font-family:cursive">WebUI-to-Code</span></h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://keunhong.com">Zhiyu Lin</a><sup>1,3</sup>,</span>
+            <span class="author-block">
+              <a href="https://utkarshsinha.com">Zhengda Zhou</a><sup>1,4</sup>,</span>
+            <span class="author-block">
+              <a href="https://jonbarron.info">Zhiyuan Zhao</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://sofienbouaziz.com">Tianrui Wan</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.danbgoldman.com">Yilun Ma</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://homes.cs.washington.edu/~seitz/">Junyu Gao</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.ricardomartinbrualla.com">Xuelong Li</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>
+Institute of Artificial Intelligence (TeleAI), China Telecom,</span>
+            <span class="author-block"><sup>2</sup>Northwestern Polytechnical University,</span>
+            <span class="author-block"><sup>3</sup>Beijing Jiaotong University,</span>
+            <span class="author-block"><sup>4</sup>Nanjing University</span>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2506.07818" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="http://arxiv.org/abs/2506.07818" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+      
+              <span class="link-block">
+                <a href="https://github.com/MAIL-Tele-AI/WebUIBench" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/Tele-AI-MAIL/WebUIBench" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p>🤗</p>
+                  </span>
+                  <span>Dataset</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                <a href="#leaderboard" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p>🏆</p>
+                  </span>
+                  <span>Leaderboard</span>
+                  </a>
+                </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero teaser">
+  <div class="container is-max-desktop" style="max-width: 1200px">
+    <div class="hero-body">
+      <img src="./static/images/overview.png">
+      <h2 class="subtitle has-text-centered">
+        Evaluation taxonomy(left) and Task examples(right) of WebUIBench.
+      </h2>
+    </div>
+  </div>
+
+
+  <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The emergence of Large Language Models(LLMs) has rapidly reshaped the landscape of software engineering. AI code generation evolves from assisting developers to independently completing the entire development lifecycle <b>(i.e., AI software engineer)</b>. With the rapid advancement of Generative AI technology, Multimodal Large Language Models(MLLMs) have the potential to act as AI software engineers capable of executing complex <b>web application development</b>. 
+          </p>
+          <p>
+            Considering that the model requires a confluence of multidimensional sub-capabilities to address the challenges of various development phases, constructing a multi-view evaluation framework is crucial for accurately guiding the enhancement of  development efficiency. However, existing benchmarks usually fail to provide an assessment of sub-capabilities and focus solely on webpage generation outcomes.
+          </p>
+
+          <p>
+            In this work, we draw inspiration from the principles of software engineering and further propose <b>WebUIBench</b>, a benchmark systematically designed to evaluate MLLMs in four key areas: <b>WebUI Perception</b>, <b>HTML Programming</b>, <b>WebUI-HTML Understanding</b>, and <b>WebUI-to-Code</b>. WebUIBench comprises 21K high-quality question-answer pairs derived from over 0.7K real-world websites. This paper has been accepted by <b style="color: red;">ACL 2025 (findings).</b>
+          </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+
+<section class="hero is-light is-small" style="margin-top: 2em;">
+  <div class="hero-body has-text-centered">
+  <h1 class="title is-1 publication-title">
+        <span style="vertical-align: middle;font-family:cursive">Dataset Overview and Download</span>
+  </h1>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Abstract</h2> -->
+        <div class="content has-text-justified">
+          <p>
+            WebUIBench consists of <b>5 categories of websites commonly visited</b> by users: enterprise portals, background management systems, personal blogs, news sites, and e-commerce platforms.
+          </p>
+          <p>
+            
+          </p>
+          <p>
+            For webpage data collection, our dataset consists of <b>719 full webpage and 2488 webpage slices</b> from 5 categories, covering a variety of resolution modes. We open-source the screenshot (.png files), source HTML code (.html files), and element information (.json files) for these webpage. Based on this, WebUIBench includes <b>21,793 question-answer pairs</b>, with an average of <b>10.68 question-answer pairs</b> per webpage screenshot.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  <!-- <div class="columns is-centered">
+        <div class="content has-text-centered">
+          <img src="static/images/statistics.png" alt="data-overview" style="max-width: 50%;">
+          <p> 
+            Key statistics(left) and Question-Answer distribution(right) of WebUIBench.
+          </p> 
+       </div>
+    </div>
+  </div> -->
+  <div class="container is-max-desktop" style="max-width: 800px">
+    <div class="hero-body">
+      <img src="static/images/statistics.png">
+      <h2 class="subtitle has-text-centered">
+        Key statistics(left) and Question-Answer distribution(right) of WebUIBench.
+      </h2>
+   </div>
+   </div>
+
+   <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Abstract</h2> -->
+        <div class="content has-text-justified">
+          <p >
+            Download the dataset from: <a style="color: #2671b3;font-weight: bold;font-size: large;" href="https://huggingface.co/datasets/Tele-AI-MAIL/WebUIBench">[🤗Huggingface]</a> or <a style="color: #2671b3;font-weight: bold;font-size: large;" href="https://huggingface.co/datasets/Tele-AI-MAIL/WebUIBench">[BaiduNetDisk]</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+
+</section>
+
+
+<!-- <section class="hero is-light is-small" style="margin-top: 2em;">
+  
+</section> -->
+
+
+
+<section class="py-8 bg-gray-50" x-data="leaderboard()">
+  <div class="hero-body has-text-centered">
+  <h1 class="title is-1 publication-title">
+        <span style="vertical-align: middle;font-family:cursive">🏆 Leaderboard and Evaluation Guidline</span>
+  </h1>
+  </div>
+  <div class="max-w-6xl mx-auto px-4"  style="max-width: 100%;">
+
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+          <tr class="text-gray-700 text-sm">
+            <!-- 序号列 -->
+            <th class="px-4 py-2">#</th>
+            <!-- 其他列 -->
+            <template x-for="col in columns" :key="col.key">
+              <th
+                class="px-4 py-2 text-center select-none"
+                :class="col.sortable ? 'cursor-pointer hover:bg-gray-200' : ''"
+                @click="col.sortable && sortBy(col.key)"
+              >
+                <div class="inline-flex items-center space-x-1 justify-center">
+                  <span x-text="col.label"></span>
+                  <svg
+                    x-show="col.sortable"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-8 h-10"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    :class="{
+                      'text-gray-300': sortKey !== col.key,
+                      'text-gray-500': sortKey === col.key
+                    }"
+                  >
+                    <path fill-rule="evenodd" d="M7 11l5-5 5 5H7zm5 3l5-5H7l5 5z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </th>
+            </template>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          <template x-for="(row, idx) in sortedData" :key="row.model+row.size">
+            <tr class="hover:bg-gray-50 text-sm">
+              <td class="px-4 py-2 text-center font-medium" x-text="idx + 1"></td>
+              <td class="px-4 py-2" x-text="row.model"></td>
+              <td class="px-4 py-2 text-center" x-text="row.size"></td>
+              <td class="px-4 py-2 text-center" x-text="row.EC"></td>
+              <td class="px-4 py-2 text-center" x-text="row.OCR"></td>
+              <td class="px-4 py-2 text-center" x-text="row.AP"></td>
+              <td class="px-4 py-2 text-center" x-text="row.VG"></td>
+              <td class="px-4 py-2 text-center text-blue-600 font-semibold" x-text="row.avg1"></td>
+              <td class="px-4 py-2 text-center" x-text="row.CEC"></td>
+              <td class="px-4 py-2 text-center" x-text="row.CFE"></td>
+              <td class="px-4 py-2 text-center text-orange-600 font-semibold" x-text="row.avg2"></td>
+              <td class="px-4 py-2 text-center" x-text="row.WHM"></td>
+              <td class="px-4 py-2 text-center" x-text="row.WHR"></td>
+              <td class="px-4 py-2 text-center text-green-600 font-semibold" x-text="row.avg3"></td>
+              <td class="px-4 py-2 text-center text-purple-700 font-bold" x-text="row.W2C"></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Abstract</h2> -->
+        <div class="content has-text-justified">
+          <p style="margin-top: 2em;font-weight: bold;"><span style="font-weight: bold;color: blue;">WebUI Perception:</span> EC=Element Classification, AP=Attribute Perception, VG=Visual Grounding;
+          <span style="font-weight: bold;color: orange;">HTML Programming: </span>CEC=Code Error Correcting, CFE=Code Function Editing;
+          <span style="font-weight: bold;color: green;">WebUI-HTML Understanding: </span>WHM=WebUI-HTML Matching, WHR=WebUI-HTML Retrieval;<span style="font-weight: bold;color: purple;"> W2C=WebUI-to-Code</span>.</p>
+        </div>
+      </div>
+    </div>
+    </div>
+ 
+</section>
+
+<section class="hero is-small" style="margin-top: 2em;">
+
+   <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Abstract</h2> -->
+        <div class="content has-text-justified">
+         <h2>Submission Instructions</h2>
+          <p>Please follow the requirements below to submit your evaluation results:</p>
+          <ul>
+            <li><strong>File Format:</strong> Must be a <code>.json</code> file.</li>
+            <li><strong>Sample Template:</strong> Download and refer to the example format here:  
+              <a href="https://example.com/sample.json" target="_blank" rel="noopener" style="color: #da1039; text-decoration: underline;">Download Sample File</a>
+            </li>
+            <li><strong>How to Submit:</strong> Send your <code>.json</code> file as an email attachment to  
+              <a href="zyllin@bjtu.edu.cn" style="color: #da1039; text-decoration: underline;">zyllin@bjtu.edu.cn</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+
+</section>
+
+
+
+<section class="section">
+  
+
+   <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Abstract</h2> -->
+        <div class="content has-text-justified">
+         <h2>Self-Evaluation</h2>
+          <p>If you prefer to run the evaluation on your own, we provide reference code and a Docker image. See the details below:</p>
+          <ul>
+            <li>
+              <strong>Evaluation Code Repository:</strong>  
+              <a href="https://example.com/benchmark-code" target="_blank" rel="noopener" style="color: #da1039; text-decoration: underline;">View &amp; Clone Repository</a>
+            </li>
+            <li>
+              <strong>Docker Image:</strong>  
+              <code>docker pull example/benchmark:latest</code><br>  
+            </li>
+            <li>
+              <strong>For more evaluation information please visit </strong> <a href="https://example.com/benchmark-docker" target="_blank" rel="noopener" style="color: #da1039; text-decoration: underline;">[Document]</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+
+</section>
+
+
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{lin2025webuibench,
+  title={WebUIBench: A Comprehensive Benchmark for Evaluating Multimodal Large Language Models in WebUI-to-Code},
+  author={Zhiyu Lin, Zhengda Zhou, Zhiyuan Zhao, Tianrui Wan, Yilun Ma, Junyu Gao, XueLong Li},
+  journal={ACL},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- <script>
+    // const leaderboardData = [
+    //   {
+    //     model: "GPT-4o", group: "Closed", size: "-", EC: 83.3, OCR: 79.1, AP: 79.8, VG: 44.4,
+    //     avg1: 57.3, CEC: 91.8, CFE: 90.4, avg2: 91.1, WHM: 65.7, WHR: 41.9, avg3: 53.8, W2C: 82.0
+    //   },
+    //   {
+    //     model: "Claude-3.5-Sonnet", group: "Closed", size: "-", EC: 78.9, OCR: 77.3, AP: 80.7, VG: 42.9,
+    //     avg1: 55.9, CEC: 88.6, CFE: 86.9, avg2: 87.8, WHM: 73.7, WHR: 43.6, avg3: 58.7, W2C: 80.2
+    //   },
+    //   {
+    //     model: "InternVL2.5", group: "Open", size: "78B", EC: 41.6, OCR: 62.0, AP: 73.8, VG: 43.5,
+    //     avg1: 44.2, CEC: 92.5, CFE: 88.9, avg2: 90.7, WHM: 83.7, WHR: 59.7, avg3: 71.7, W2C: 75.7
+    //   },
+    //   {
+    //     model: "Qwen2-VL", group: "Open", size: "72B", EC: 71.1, OCR: 83.4, AP: 78.9, VG: 24.5,
+    //     avg1: 51.6, CEC: 91.5, CFE: 91.6, avg2: 91.6, WHM: 74.7, WHR: 49.8, avg3: 62.2, W2C: 77.3
+    //   },
+    //   {
+    //     model: "InternVL2", group: "Open", size: "40B", EC: 50.8, OCR: 66.1, AP: 61.6, VG: 29.7,
+    //     avg1: 41.8, CEC: 76.7, CFE: 73.1, avg2: 74.9, WHM: 65.7, WHR: 60.9, avg3: 63.3, W2C: 74.3
+    //   }
+    // ];
+
+    // 按 W2C 倒序排序
+    const sortedData = leaderboardData.sort((a, b) => b.W2C - a.W2C);
+
+    const tbody = document.getElementById("leaderboard-body");
+
+    sortedData.forEach((item, index) => {
+      const medal = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1;
+      const row = document.createElement("tr");
+      row.className = "hover:bg-gray-50";
+
+      row.innerHTML = `
+        <td class="border px-2 py-1 font-semibold">${medal}</td>
+        <td class="border px-2 py-1 text-left">${item.model}</td>
+        <td class="border px-2 py-1">${item.size}</td>
+        <td class="border px-2 py-1">${item.EC}</td>
+        <td class="border px-2 py-1">${item.OCR}</td>
+        <td class="border px-2 py-1">${item.AP}</td>
+        <td class="border px-2 py-1">${item.VG}</td>
+        <td class="border px-2 py-1 text-blue-600 font-semibold">${item.avg1}</td>
+        <td class="border px-2 py-1">${item.CEC}</td>
+        <td class="border px-2 py-1">${item.CFE}</td>
+        <td class="border px-2 py-1 text-orange-600 font-semibold">${item.avg2}</td>
+        <td class="border px-2 py-1">${item.WHM}</td>
+        <td class="border px-2 py-1">${item.WHR}</td>
+        <td class="border px-2 py-1 text-green-600 font-semibold">${item.avg3}</td>
+        <td class="border px-2 py-1 text-purple-700 font-bold">${item.W2C}</td>
+      `;
+
+      tbody.appendChild(row);
+    });
+  </script> -->
+
+  <!-- 然后初始化 Alpine 组件 -->
+  <script>
+function leaderboard() {
+  return {
+    columns: [
+      { key: 'model', label: 'Model', sortable: false },
+      { key: 'size',  label: 'Size',  sortable: true  },
+      { key: 'EC',    label: 'EC',    sortable: true  },
+      { key: 'OCR',   label: 'OCR',   sortable: true  },
+      { key: 'AP',    label: 'AP',    sortable: true  },
+      { key: 'VG',    label: 'VG',    sortable: true  },
+      { key: 'avg1',  label: 'Avg.',  sortable: true  },
+      { key: 'CEC',   label: 'CEC',   sortable: true  },
+      { key: 'CFE',   label: 'CFE',   sortable: true  },
+      { key: 'avg2',  label: 'Avg.',  sortable: true  },
+      { key: 'WHM',   label: 'WHM',   sortable: true  },
+      { key: 'WHR',   label: 'WHR',   sortable: true  },
+      { key: 'avg3',  label: 'Avg.',  sortable: true  },
+      { key: 'W2C',   label: 'W2C',   sortable: true  },
+    ],
+
+    data: leaderboardData, // 从 data.js 中获取数据
+
+    sortKey: 'W2C',
+    sortAsc: false,
+    sortValue(row, key) {
+      if (key === 'model') {
+        // 这里把 model 和 size 拼在一起
+        return `${row.model}${row.size}`;
+      }
+      return row[key];
+    },
+
+    get sortedData() {
+      return [...this.data].sort((a, b) => {
+        const va = this.sortValue(a, this.sortKey);
+        const vb = this.sortValue(b, this.sortKey);
+
+        // 如果是数值，就用数值比较，否则字符串比较
+        if (!isNaN(va) && !isNaN(vb)) {
+          return (va - vb) * (this.sortAsc ? 1 : -1);
+        }
+        return va.toString().localeCompare(vb.toString()) * (this.sortAsc ? 1 : -1);
+      });
+    },
+
+    sortBy(key) {
+      if (this.sortKey === key) {
+        this.sortAsc = !this.sortAsc;
+      } else {
+        this.sortKey = key;
+        this.sortAsc = true;
+      }
+    }
+    // get sortedData() {
+    //   return [...this.data].sort((a,b) => {
+    //     let va = a[this.sortKey], vb = b[this.sortKey];
+    //     if (va === vb) return 0;
+    //     return (va > vb ? 1 : -1) * (this.sortAsc ? 1 : -1);
+    //   });
+    // },
+
+    // sortBy(key) {
+    //   if (this.sortKey === key) {
+    //     this.sortAsc = !this.sortAsc;
+    //   } else {
+    //     this.sortKey = key;
+    //     this.sortAsc = true;
+    //   }
+    // },
+  }
+}
+</script>
+
+</body>
+</html>
+</body>
 </html>
